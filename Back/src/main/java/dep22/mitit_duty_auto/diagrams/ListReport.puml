@@ -1,0 +1,12 @@
+@startuml
+class ListReport {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String reportName;
+    private String toWhom;
+    private String description;
+
+}
+@enduml

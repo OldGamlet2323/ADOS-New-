@@ -1,0 +1,159 @@
+.mini-schedule-box {
+  margin-bottom: 20px;
+}
+
+  .task-item {
+    cursor: move;
+  }
+
+  .task-item.dragging,
+  .sub-task-item.dragging {
+    opacity: 0.5;
+    background: rgba(106, 132, 127, 0.2);
+  }
+
+  .task-item.drag-over,
+  .sub-task-item.drag-over {
+    border: 2px dashed #6a847f;
+  }
+
+.task-item.editing {
+  background-color: rgba(106, 132, 127, 0.1);
+  border: 1px solid #6a847f;
+}
+
+.task-item.selected {
+  border-left: 3px solid #6a847f;
+}
+
+.cancel-edit-btn {
+  padding: 8px 16px;
+  margin-left: 10px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-edit-btn:hover {
+  background: #e4e4e4;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.add-sub-action-btn {
+  background: #6a847f;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.add-sub-action-btn:hover {
+  background: #5a747f;
+  transform: scale(1.05);
+}
+
+.add-sub-action-btn:hover::after {
+  content: attr(title);
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.sub-actions-container {
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 2px solid #e0e0e0;
+}
+
+.sub-action-form {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+  padding: 8px;
+  background: rgba(106, 132, 127, 0.05);
+  border-radius: 4px;
+}
+
+.sub-action-form input {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.sub-action-form button {
+  padding: 6px 12px;
+  background: #6a847f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sub-action-form button:hover {
+  background: #5a747f;
+}
+
+.sub-task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  margin: 4px 0;
+  background: rgba(106, 132, 127, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sub-task-item:hover {
+  background: rgba(106, 132, 127, 0.1);
+}
+
+.sub-task-item.editing {
+  background: rgba(106, 132, 127, 0.15);
+  border: 1px solid #6a847f;
+}
+
+.delete-sub-action-btn {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 4px;
+  transition: all 0.2s ease;
+}
+
+.delete-sub-action-btn:hover {
+  color: #ff6b6b;
+}
+
+.sub-action-name {
+  flex: 1;
+  margin-right: 8px;
+}

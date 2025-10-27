@@ -1,0 +1,9 @@
+--- 
+ - name: Display current time on hosts 
+   hosts: deploy_servers # Цільові хости (можна замінити на групу з вашого inventory, напр. 'webservers') 
+   become: no # Для команди 'date' зазвичай не потрібні права root (sudo) 
+   gather_facts: yes # Збір фактів не потрібен для цієї простої задачі (опціонально, пришвидшує виконання) 
+   
+   tasks:
+    - debug:
+        var: ansible_date_time

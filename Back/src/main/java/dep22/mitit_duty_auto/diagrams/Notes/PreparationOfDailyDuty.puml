@@ -1,0 +1,10 @@
+@startuml
+class PreparationOfDailyDuty {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String orderName;
+    private String eventTime;
+}
+@enduml

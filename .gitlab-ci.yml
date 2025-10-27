@@ -1,0 +1,97 @@
+variables:
+  DEBIAN_FRONTEND: noninteractive
+  # Define REGISTRY_IMAGE globally to avoid duplication
+  REGISTRY_IMAGE: "$CI_REGISTRY_IMAGE/min-auth-proj"
+  IMAGE_TAG: "$REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+  DB_URL: "$CI_DB_URL"
+  DB_USER: "$CI_DB_USER"
+  DB_PASSWORD: "$CI_DB_PASSWORD"
+  ANSIBLE_REPO_URL: 'https://gitlab.com/aVOKADO-hub/ansible_repo.git'
+  ANSIBLE_CLONE_DIR: ansible_repo
+  SSH_PRIVATE_KEY: "$CI_SSH_PRIVATE_KEY"
+
+stages:
+  - test
+  - build
+  - test_container
+
+semgrep:
+  stage: test
+  image: semgrep/semgrep
+  script:
+    - semgrep ci
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  variables:
+    SEMGREP_APP_TOKEN: $SEMGREP_APP_TOKEN
+
+build_job:
+  stage: build
+  tags:
+    - runner
+  before_script:
+    - apt-get update
+    - apt-get install -y openjdk-21-jdk maven docker.io
+    - rm -rf ~/.m2/repository/org/springframework/boot/
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker build -t "$IMAGE_TAG" Back/
+    - docker push "$IMAGE_TAG"
+  cache:
+    paths:
+      - ~/.m2/repository/
+
+container_scan:
+  stage: test_container
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - trivy image --scanners vuln --format sarif --output trivy-report.sarif "$IMAGE_TAG"
+  artifacts:
+    reports:
+      codequality: trivy-report.sarif
+# deploy_job:
+#   stage: deploy
+#   tags:
+#     - runner
+#   needs:
+#     - job: build_job
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "master"'
+#       when: on_success
+#   before_script:
+#     # Установка зависимостей
+#     - apt-get update && apt-get install -y openssh-client git ansible
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ansible
+#     - chmod 600 ~/.ssh/id_ansible
+#     - export ANSIBLE_HOST_KEY_CHECKING=False
+
+#     # Проверка существования директории ansible_repo и клонирование/обновление
+#     - echo "Проверка существования директории ansible_repo..."
+#     # - if [ -d "$ANSIBLE_CLONE_DIR" ]; then echo "Директория уже существует, выполняем git pull..."; 
+#     # cd "$ANSIBLE_CLONE_DIR" && git pull; 
+#     # ssh -vT git@gitlab.com
+
+#     # # else echo "Клонируем репозиторий..."; 
+#     # # git clone "$ANSIBLE_REPO_URL" "$ANSIBLE_CLONE_DIR"; fi
+
+#     # # Проверка содержимого клонированной папки
+#     # - echo "Проверка содержимого клонированной папки..."
+#     # - ls -l "$ANSIBLE_CLONE_DIR"
+
+#   script:
+#     - echo "Запуск Ansible Playbook для Docker-деплоя..."
+#     - pwd
+#     - ls -l
+#     - ansible-playbook -i inventory.ini deploy-backend.yml -e "registry_image=$REGISTRY_IMAGE" -e "image_tag=$IMAGE_TAG" -e "gitlab_db_url=$DB_URL" -e "gitlab_db_user=$DB_USER" -e "gitlab_db_password=$DB_PASSWORD" -e "gitlab_my_database=$DB_NAME" 

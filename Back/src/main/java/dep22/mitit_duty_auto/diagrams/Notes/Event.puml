@@ -1,0 +1,10 @@
+@startuml
+class Event {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String eventName;
+    private String eventTime;
+}
+@enduml

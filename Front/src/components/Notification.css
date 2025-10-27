@@ -1,0 +1,36 @@
+/* Notification.css */
+.notification-banner {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffc107; /* A nice warning yellow */
+  color: #333;
+  padding: 15px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 2000; /* Ensure it's on top of other content */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 400px;
+  font-size: 1.1rem;
+}
+
+.notification-banner p {
+  margin: 0;
+  padding-right: 20px;
+}
+
+.close-notification-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.close-notification-btn:hover {
+  opacity: 0.7;
+}

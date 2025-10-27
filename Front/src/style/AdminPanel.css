@@ -1,0 +1,492 @@
+/* Загальні стилі адмін панелі */
+.admin-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6a847f 0%, #5a747f 100%);
+  position: relative;
+  margin-left: 4.3rem;
+  padding: 20px;
+}
+
+.admin-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url(./img/bg-logo.png);
+  background-size: cover;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.admin-wrapper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Головна панель */
+.admin-panel {
+  background: rgba(224, 235, 235, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Заголовок */
+.admin-panel h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Контроли перемикання */
+.admin-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.toggle-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background: linear-gradient(145deg, #f0f8f8, #e0ebeb);
+  color: #34495e;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.toggle-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.toggle-button:hover::before {
+  left: 100%;
+}
+
+.toggle-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #e8f4f4, #d8e8e8);
+}
+
+.toggle-button.active {
+  background: linear-gradient(145deg, #6a847f, #5a747f);
+  color: white;
+  box-shadow: 0 6px 20px rgba(106, 132, 127, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Повідомлення про помилки */
+.error-message {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 20px 0;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  font-weight: 500;
+  animation: slideInFromTop 0.3s ease-out;
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Обгортка даних */
+.data-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Контейнер таблиці */
+.admin-table-container {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(106, 132, 127, 0.2);
+}
+
+.data-list h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #6a847f, #5a747f);
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Стилі таблиці */
+.admin-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table-container thead {
+  background: linear-gradient(135deg, #34495e, #2c3e50);
+  color: white;
+}
+
+.admin-table-container th {
+  padding: 15px 12px;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 13px;
+  border-bottom: 2px solid #6a847f;
+}
+
+.admin-table-container td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.admin-table-container tbody tr {
+  transition: all 0.2s ease;
+}
+
+.admin-table-container tbody tr:hover {
+  background-color: rgba(106, 132, 127, 0.05);
+  transform: scale(1.01);
+}
+
+.admin-table-container tbody tr:nth-child(even) {
+  background-color: rgba(248, 249, 250, 0.5);
+}
+
+/* Скролл для таблиці */
+.data-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.data-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.data-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.data-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6a847f, #5a747f);
+  border-radius: 4px;
+}
+
+.data-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a747f, #4a646f);
+}
+
+/* Кнопка видалення */
+.delete-button {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.delete-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+  background: linear-gradient(135deg, #ee5a24, #d63031);
+}
+
+.delete-button:active {
+  transform: translateY(0) scale(1);
+}
+
+/* Контейнер форми */
+.admin-form-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(106, 132, 127, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.admin-form-container h3 {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  color: #2c3e50;
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #6a847f;
+}
+
+/* Стилі форми */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group-admin label {
+  font-weight: 600;
+  color: #34495e;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Поля вводу */
+.input-field {
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #6a847f;
+  box-shadow: 0 0 0 3px rgba(106, 132, 127, 0.1);
+  background: white;
+  transform: translateY(-1px);
+}
+
+.input-field::placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+/* Textarea */
+.input-field.description {
+  min-height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Select */
+.input-field[type="select"], select.input-field {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  appearance: none;
+}
+
+/* Checkbox */
+input[type="checkbox"].input-field {
+  width: auto;
+  transform: scale(1.2);
+  accent-color: #6a847f;
+}
+
+/* Кнопка додавання */
+.add-button {
+  background: linear-gradient(135deg, #6a847f, #5a747f);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.add-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.add-button:hover::before {
+  left: 100%;
+}
+
+.add-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(106, 132, 127, 0.4);
+  background: linear-gradient(135deg, #5a747f, #4a646f);
+}
+
+.add-button:active {
+  transform: translateY(-1px);
+}
+
+.add-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.add-button:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Адаптивність */
+@media (max-width: 1200px) {
+  .data-wrapper {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .admin-panel {
+    padding: 20px;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-wrapper {
+    margin-left: 0;
+    padding: 10px;
+  }
+  
+  .admin-panel {
+    padding: 15px;
+  }
+  
+  .admin-panel h1 {
+    font-size: 2rem;
+  }
+  
+  .admin-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .toggle-button {
+    width: 200px;
+    margin: 5px 0;
+  }
+  
+  .admin-table-container {
+    overflow-x: auto;
+  }
+  
+  .admin-table-container table {
+    min-width: 600px;
+  }
+}
+
+/* Анімації завантаження */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Покращення доступності */
+.toggle-button:focus,
+.add-button:focus,
+.delete-button:focus,
+.input-field:focus {
+  outline: 2px solid #6a847f;
+  outline-offset: 2px;
+}
+
+/* Темна тема (опціонально) */
+@media (prefers-color-scheme: dark) {
+  .admin-panel {
+    background: rgba(45, 55, 65, 0.95);
+    color: #e0e0e0;
+  }
+  
+  .admin-panel h1 {
+    color: #f0f0f0;
+  }
+  
+  .admin-table-container {
+    background: rgba(55, 65, 75, 0.9);
+  }
+  
+  .admin-form-container {
+    background: rgba(55, 65, 75, 0.95);
+  }
+  
+  .input-field {
+    background: rgba(70, 80, 90, 0.9);
+    color: #e0e0e0;
+    border-color: #555;
+  }
+  
+  .admin-table-container td {
+    border-color: #555;
+  }
+}

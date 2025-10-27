@@ -1,0 +1,13 @@
+@startuml
+class Schedule {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String eventName;
+
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
+    private List<Course> course;
+}
+@enduml

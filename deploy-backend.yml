@@ -1,0 +1,89 @@
+- name: Deploy Java backend and connect to PostgreSQL with Docker Compose
+  hosts: deploy_servers
+  become: yes
+  gather_facts: yes
+  vars:
+    deploy_dir: "/opt/min-auth-proj"
+    compose_file_src: "Back/docker-compose.yml"
+    compose_file_dest: "{{ deploy_dir }}/docker-compose.yml"
+    env_template_src: "templates/.env.j2"
+    env_file_dest: "{{ deploy_dir }}/.env"
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Install Docker Engine
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
+
+    - name: Install Docker Compose plugin
+      apt:
+        name: docker-compose-plugin
+        state: present
+
+    - name: Install Docker Python SDK
+      pip:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Create deployment directory
+      file:
+        path: "{{ deploy_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy docker-compose.yml
+      copy:
+        src: "{{ compose_file_src }}"
+        dest: "{{ compose_file_dest }}"
+        mode: '0644'
+
+    - name: Generate .env file from template
+      template:
+        src: "{{ env_template_src }}"
+        dest: "{{ env_file_dest }}"
+        mode: '0640'
+        force: yes
+
+    # - name: Deploy application with Docker Compose
+    #   community.docker.docker_compose_v2:
+    #     project_src: "{{ deploy_dir }}"
+    #     state: present
+    #     env_files:
+    #       - "{{ env_file_dest }}"
+
+    - name: This command will change the working directory to somedir/
+      ansible.builtin.shell:
+        cmd: docker compose up -d
+        chdir: "{{ deploy_dir }}"

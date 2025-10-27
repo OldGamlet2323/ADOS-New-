@@ -1,0 +1,11 @@
+@startuml
+class StaffEvent {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String staffEventName;
+    private String eventTime;
+    private String notes;
+}
+@enduml
