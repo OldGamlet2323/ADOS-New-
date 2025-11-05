@@ -3,7 +3,6 @@ import KyivTime from './KyivTime';
 import Navbar from "./Navbar";
 import DocumentForm from "./Documents/DocumentForm";
 import MiniSchedule from './MiniSchedule';
-import Sidebar from "./Sidebar";
 import { useEventTimer } from '../hooks/useEventTimer';
 
 function CommandantPage({ events }) {
@@ -13,7 +12,6 @@ function CommandantPage({ events }) {
 
     return (
         <div className="main-layout">
-            <Sidebar toggleModal={toggleModal} />
             <div className="wrapper">
                 <div className="left-section">
                     <KyivTime />

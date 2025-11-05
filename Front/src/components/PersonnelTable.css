@@ -1,0 +1,347 @@
+.personnel-table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.personnel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.personnel-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    flex: 1;
+}
+
+.personnel-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-edit,
+.btn-save,
+.btn-cancel {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-edit:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.btn-edit:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.btn-save {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #0b7dda;
+}
+
+.btn-cancel {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #da190b;
+}
+
+.personnel-table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.personnel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.personnel-table thead {
+    background-color: #f5f5f5;
+}
+
+.personnel-table th {
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    border: 1px solid #ddd;
+    background-color: #e8e8e8;
+}
+
+.personnel-table td {
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.personnel-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.unit-name {
+    text-align: left !important;
+    font-weight: 500;
+    min-width: 150px;
+}
+
+.total-cell {
+    background-color: #fff3cd;
+    font-weight: 600;
+}
+
+.personnel-list {
+    text-align: left !important;
+    min-width: 200px;
+    max-width: 300px;
+}
+
+.personnel-input {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.personnel-input:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+.personnel-textarea:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+.totals-row {
+    background-color: #e3f2fd;
+    font-weight: 600;
+}
+
+.totals-row td {
+    border-top: 2px solid #333;
+}
+
+.personnel-loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 16px;
+    color: #666;
+}
+
+.personnel-error {
+    margin-top: 15px;
+    padding: 12px;
+    background-color: #ffebee;
+    border-left: 4px solid #f44336;
+    border-radius: 4px;
+}
+
+.personnel-error p {
+    margin: 0;
+    color: #c62828;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .personnel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .personnel-header h2 {
+        font-size: 14px;
+    }
+
+    .personnel-table {
+        font-size: 12px;
+    }
+
+    .personnel-table th,
+    .personnel-table td {
+        padding: 6px 4px;
+    }
+
+    .personnel-input {
+        width: 50px;
+        font-size: 12px;
+    }
+}
+
+@media print {
+    .personnel-actions {
+        display: none;
+    }
+
+    .personnel-table-container {
+        box-shadow: none;
+    }
+
+    .personnel-input,
+    .personnel-textarea {
+        border: none;
+        background: transparent;
+    }
+}
+
+.btn-generate-report{
+    marginTop: 20px ;
+    padding: 10px 20px;
+    backgroundColor: #28a745;
+    color: white;
+    border: none;
+    borderRadius: 4px;
+    cursor: pointer;
+}
+.personnel-entry-form {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.personnel-entry-form .form-title {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 8px;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: flex-start; /* Вирівнювання по верху */
+}
+
+.form-select,
+.form-input {
+    flex: 1; /* Рівномірно розтягуємо */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box; /* Важливо для правильного розрахунку */
+}
+
+.form-input {
+    min-width: 200px; /* Мінімальна ширина для поля вводу */
+}
+
+.btn-add-person {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745; /* Зелений */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add-person:hover {
+    background-color: #218838;
+}
+
+/* --- Стилі для Typeahead (автозаповнення) --- */
+.typeahead-container {
+    position: relative;
+    flex: 1; /* Займає доступне місце */
+    min-width: 200px;
+}
+
+.suggestions-list {
+    position: absolute;
+    top: 100%; /* З'являється прямо під інпутом */
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100; /* Поверх інших елементів */
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+
+/* --- Оновлення для textarea в таблиці --- */
+.personnel-textarea {
+    width: 100%;
+    min-height: 60px; /* Трохи вище */
+    font-size: 13px;
+    border: 1px dashed #ccc;
+    background-color: #fafafa;
+    color: #555;
+    padding: 4px;
+    resize: vertical;
+}
+
+/* Стиль для readOnly textarea */
+.personnel-textarea[readOnly] {
+    background-color: #f0f0f0;
+    color: #777;
+    cursor: not-allowed;
+    border-style: solid; /* Робимо рамку суцільною в режимі readOnly */
+}
+
+/* Стиль для перегляду списку прізвищ (не в режимі редагування) */
+.personnel-names {
+    white-space: pre-line; /* Зберігає переноси рядків \n */
+    font-size: 13px;
+    text-align: left;
+    padding: 4px;
+    max-height: 100px; /* Обмеження висоти */
+    overflow-y: auto;  /* Прокрутка, якщо не влазить */
+}

@@ -9,6 +9,7 @@ import CommandantPage from './components/CommandantPage';
 import StaffPage from './components/StaffPage';
 import AlertsMapPage from './components/AlertsMapPage'
 import Checkpoint from './components/Checkpoint';
+import PersonnelTable from "./components/PersonnelTable";
 
 function App() {
   const [events, setEvents] = useState([]);

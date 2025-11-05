@@ -5,24 +5,33 @@ import Report from "./Report";
 import Instruction from './Instruction';
 import MiniSchedule from './MiniSchedule';
 import DocumentsTable from "./Documents/DocumentsTable";
-import Sidebar from "./Sidebar";
+import PersonnelTable from "./PersonnelTable";
+import ToolsPanel from './ToolsPanel'; // ЗАЛИШАЄТЬСЯ
 import { useEventTimer } from '../hooks/useEventTimer';
 import Notification from "./Notification";
 
 function DutyLayout({ events }) {
     const { timeLeft, currentEventIndex } = useEventTimer(events);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPersonnelTableOpen, setIsPersonnelTableOpen] = useState(false);
+
+    // unreadDocumentsCount залишаємо, він потрібен для DocumentsTable
     const [unreadDocumentsCount, setUnreadDocumentsCount] = useState(0);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const token = localStorage.getItem('authToken');
     const role = localStorage.getItem('role');
     const [documents, setDocuments] = useState([]);
-    const [reportNotifications, setReportNotifications] = useState([]);
+
+    // reportNotifications видалено, він був тільки для Sidebar
+
     const [eventNotification, setEventNotification] = useState(null);
     const [notificationShownForEvent, setNotificationShownForEvent] = useState(null);
 
-    const toggleModal = () => setIsModalOpen(prev => !prev);
+    const handleBCSClick = () => {
+        window.open('/personnel-table', '_blank', 'noopener,noreferrer');
+    };    const togglePersonnelTable = () => setIsPersonnelTableOpen(prev => !prev);
 
     const fetchDocuments = async () => {
         try {
@@ -59,7 +68,7 @@ function DutyLayout({ events }) {
             });
 
             setDocuments(updatedDocuments);
-            setUnreadDocumentsCount(data.filter(doc => !doc.read).length);
+            setUnreadDocumentsCount(data.filter(doc => !doc.read).length); // Залишаємо
         } catch (err) {
             setError(err.message);
         } finally {
@@ -71,6 +80,7 @@ function DutyLayout({ events }) {
         fetchDocuments();
     }, [role, token]);
 
+    // ... (useEffect для eventNotification залишається без змін) ...
     useEffect(() => {
         const nextEvent = events[currentEventIndex + 1];
 
@@ -101,16 +111,20 @@ function DutyLayout({ events }) {
         }
     }, [timeLeft, currentEventIndex, events, notificationShownForEvent]);
 
+
     return (
         <div className="main-layout">
+            <ToolsPanel
+                onDocumentsClick={handleBCSClick}
+                onBCSClick={togglePersonnelTable}
+            />
+
             {eventNotification && (
                 <Notification
                     message={eventNotification}
                     onClose={() => setEventNotification(null)}
                 />
             )}
-
-            <Sidebar toggleModal={toggleModal} hasUnreadDocuments={unreadDocumentsCount > 0} reportNotifications={reportNotifications} />
             <div className="wrapper">
                 <div className="left-section">
                     <KyivTime />
@@ -122,6 +136,15 @@ function DutyLayout({ events }) {
                         timeLeft={timeLeft}
                     />
                 </div>
+
+                {/* ТАБЛИЦЯ БЧС (PersonnelTable) тепер з'являється БЕЗ Sidebar */}
+                {isPersonnelTableOpen && (
+                    <div className="personnel-section">
+                        <PersonnelTable />
+                    </div>
+                )}
+
+                {/* Решта секцій залишається */}
                 <div className="schedule-section">
                     <div className="mini-schedules">
                         <MiniSchedule
@@ -146,9 +169,9 @@ function DutyLayout({ events }) {
             </div>
 
             {isModalOpen && (
-                <div className="modal-overlay" onClick={toggleModal}>
+                <div className="modal-overlay" onClick={handleBCSClick}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="close-btn" onClick={toggleModal}>
+                        <button className="close-btn" onClick={handleBCSClick}>
                             &times;
                         </button>
                         <DocumentsTable

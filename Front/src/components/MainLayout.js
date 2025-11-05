@@ -5,7 +5,6 @@ import Schedule from './Schedule';
 import Report from "./Report";
 import Instruction from './Instruction';
 import DocumentsTable from "./Documents/DocumentsTable";
-import Sidebar from "./Sidebar";
 import { useEventTimer } from '../hooks/useEventTimer';
 import Notification from "./Notification";
 
@@ -124,10 +123,6 @@ function MainLayout({ events }) {
                     onClose={() => setEventNotification(null)}
                 />
             )}
-
-
-
-            <Sidebar toggleModal={toggleModal} hasUnreadDocuments={unreadDocumentsCount > 0} reportNotifications={reportNotifications} />
             <div className="wrapper">
                 {/* ... решта вашого JSX без змін ... */}
                 <div className="left-section">
